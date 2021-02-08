@@ -1,0 +1,24 @@
+#ifndef HEMERA_PLUGINSCONFIG_H
+#define HEMERA_PLUGINSCONFIG_H
+
+namespace StaticConfig {
+
+constexpr QLatin1String haFilesPath() { return QLatin1String("@HEMERA_SERVICE_DIR@"); }
+constexpr QLatin1String haBaseResourceDir() { return QLatin1String("@HA_BASE_RESOURCE_DIR@"); }
+constexpr QLatin1String hemeraEnvironmentPath() { return QLatin1String("@GRAVITY_ENVIRONMENT_DIR@"); }
+constexpr QLatin1String debugScriptsDir() { return QLatin1String("@HA_BASE_RESOURCE_DIR@"); }
+constexpr QLatin1String configGravityPath() { return QLatin1String("@GRAVITY_CONFIG_DIR@"); }
+constexpr QLatin1String configOrbitPath() { return QLatin1String("@GRAVITY_ORBIT_CONFIG_DIR@"); }
+constexpr QLatin1String hemeraApplicationInstallDir() { return QLatin1String("@HA_INSTALL_BIN_DIR@"); }
+constexpr QLatin1String hemeraApplicationBaseResourceDir() { return QLatin1String("@HA_BASE_RESOURCE_DIR@"); }
+constexpr QLatin1String hemeraApplicationOwnResourceDir() { return QLatin1String("@HA_OWN_RESOURCE_DIR@"); }
+constexpr QLatin1String hemeraRootOperationInstallDir() { return QLatin1String("@HA_ROOTOPERATION_INSTALL_BIN_DIR@"); }
+constexpr QLatin1String hemeraDataDir() { return QLatin1String("@HA_SDK_DATA_DIR@"); }
+constexpr QLatin1String hemeraToolsInstallDir() { return QLatin1String("@HA_TOOLS_DIR@"); }
+constexpr QLatin1String hemeraStarsRuntimeDir() { return QLatin1String("@HEMERA_STARS_RUNTIME_DIR@"); }
+constexpr QLatin1String gravityUsersListPath() { return QLatin1String("@GRAVITY_USERLISTS_DIR@"); }
+constexpr QLatin1String hyperspaceConfigurationDir() { return QLatin1String("/etc/hemera/hyperspace"); }
+
+}
+
+#endif

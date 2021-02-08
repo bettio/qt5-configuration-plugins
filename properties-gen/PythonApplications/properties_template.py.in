@@ -1,0 +1,8 @@
+from hemera.core import ApplicationProperties
+
+class %1(ApplicationProperties):
+    def __init__(self):
+        self.id = b"%2"
+        self.name = b"%3"
+        self.version = b"%4"
+        self.organization = b"%5"

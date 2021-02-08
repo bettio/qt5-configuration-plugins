@@ -1,0 +1,83 @@
+# Astarte Gateway configuration. Self-generated!
+
+# Correct user, to allow certificate access
+user astarte-transport
+
+# Disallow zero length client id
+allow_zero_length_clientid false
+
+# =================================================================
+# Default listener
+# =================================================================
+
+# IP address/hostname to bind the default listener to. If not
+# given, the default listener will not be bound to a specific
+# address and so will be accessible to all network interfaces.
+# bind_address ip-address/host name
+@BIND_ADDRESS@
+
+port 1883
+protocol mqtt
+
+# Enable me only if local gateway authentication is enabled!
+#use_username_as_clientid true
+
+# -----------------------------------------------------------------
+# Certificate based SSL/TLS support
+# -----------------------------------------------------------------
+#cafile
+#capath
+# Path to the PEM encoded server certificate.
+#certfile
+# Path to the PEM encoded keyfile.
+#keyfile
+#require_certificate false
+#use_identity_as_username true
+#ciphers DEFAULT:!aNULL:!eNULL:!LOW:!EXPORT:!SSLv2:@STRENGTH
+
+# Do not save persistence to disk! It kills our gateway, and persistence
+# is given by Astarte itself through bridging.
+persistence false
+
+# Allow insecure
+allow_anonymous true
+
+# Control access to topics on the broker using an access control list
+# file. If this parameter is defined then only the topics listed will
+# have access.
+#acl_file
+
+
+# =================================================================
+# Local listener. Will be used only by the gateway itself!
+# =================================================================
+listener 1885 127.0.0.1
+max_connections 1
+protocol mqtt
+use_username_as_clientid false
+
+# =================================================================
+# Astarte bridge
+# =================================================================
+
+connection astarte
+address @ASTARTE_BROKER_HOST@:@ASTARTE_BROKER_PORT@
+bridge_protocol_version mqttv311
+keepalive_interval 30
+
+remote_clientid @GATEWAY_CLIENT_ID@
+local_clientid astarte.gateway
+
+start_type automatic
+cleansession false
+try_private true
+
+notifications true
+notification_topic gateway/@GATEWAY_CLIENT_ID@/state
+
+bridge_cafile /var/lib/astarte/gateway/mqtt_broker.ca
+bridge_certfile /var/lib/astarte/gateway/mqtt_broker.crt
+bridge_keyfile /var/lib/astarte/crypto/astartekey.pem
+bridge_insecure false
+
+@TOPIC_ACCESS_RULES@

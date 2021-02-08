@@ -1,0 +1,18 @@
+find_package(Qt5 COMPONENTS @QT_MODULES@ REQUIRED)
+find_package(HemeraQt5SDK COMPONENTS @HEMERA_MODULES@ REQUIRED)
+
+@INCLUDE_DIRECTORIES@
+
+# sources
+set(@OPERATION_ID@_SRCS
+    @SOURCES@
+)
+
+# final lib
+add_executable(hemera-rootoperation-@OPERATION_ID@ ${@OPERATION_ID@_SRCS})
+
+target_link_libraries(hemera-rootoperation-@OPERATION_ID@ @QT_NAMESPACED_MODULES@ @HEMERA_NAMESPACED_MODULES@)
+@LINK_LIBRARIES@
+
+# Install phase
+hemera_rootoperation_binary_install(hemera-rootoperation-@OPERATION_ID@ "@OPERATION_ID@" "@APPLICATION_ID@")

@@ -1,0 +1,18 @@
+[Unit]
+Description=Hyperdrive HTTP transport socket
+@REQUIRES_SSL@
+
+[Socket]
+# Bind to parent service
+Service=hyperdrive-transport-http.service
+Accept=false
+
+# Hyperspace
+ListenStream=@IP@@PORT@
+
+# Bind options
+BindIPv6Only=@IPV6_ONLY@
+@BIND_TO_DEVICE@
+
+[Install]
+WantedBy=sockets.target

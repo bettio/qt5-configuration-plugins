@@ -1,0 +1,17 @@
+project(@APPLICATION_BASE_NAME@)
+
+cmake_minimum_required(VERSION 2.8.9)
+
+# CMake macros are in here, so we need it.
+find_package(HemeraQt5SDK COMPONENTS Core REQUIRED)
+
+set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
+
+@PYTHON_PROPERTIES@
+
+# Install phase
+hemera_application_static_install(@APPLICATION_BASE_NAME@ "@APPLICATION_ID@" ${CMAKE_SOURCE_DIR}/@APPLICATION_ID@.ha)
+@INSTALL_RESOURCE_FILES@
+
+# Archive
+hemera_application_create_package(@APPLICATION_BASE_NAME@ @APPLICATION_VERSION@)

@@ -1,0 +1,13 @@
+#include <QtCore/QCoreApplication>
+
+#include "simpleapplicationproperties.h"
+
+@INCLUDES@
+
+int main(int argc, char *argv[])
+{
+    QCoreApplication app(argc, argv);
+
+    @BASE_CLASS@ happ(new SimpleApplicationProperties@PARAMS@);
+    return happ.exec();
+}

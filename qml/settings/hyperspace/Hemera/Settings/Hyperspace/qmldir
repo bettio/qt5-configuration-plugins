@@ -1,0 +1,3 @@
+module com.ispirata.Hemera.Settings.Hyperspace
+plugin HemeraQmlSettingsHyperspace
+typeinfo com.ispirata.Hemera.Settings.Hyperspace.qmltypes

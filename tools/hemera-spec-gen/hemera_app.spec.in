@@ -1,0 +1,107 @@
+[macros]
+
+Name:           ha-[name]
+Summary:        [summary]
+Version:        [version]
+License:        Proprietary/Other
+Release:        1
+Group:          Hemera/Applications
+Source0:        http://distfiles.hemera.ispirata.biz/[name]-%{version}.tar.bz2
+
+# Make it provide a package named after its id (dashed out)
+Provides: ha-[appiddashes] = %{version}
+
+Requires(post):     /sbin/ldconfig
+Requires(postun):   /sbin/ldconfig
+
+[buildrequires]
+BuildRequires: cmake
+BuildRequires: hemera-sdk-tools
+BuildRequires: hemera-generators-plugins-qt5applications
+BuildRequires: common-cmake-modules
+BuildRequires: hemera-configuration-compiler
+BuildRequires: hemera-configuration-compiler-plugins-gravity
+BuildRequires: gravity-user-manager
+
+Provides:      hemeraapplication([appid])
+
+Requires:      gravity-user-manager
+%{_gravity_user_manager_requires_post}
+%{_gravity_user_manager_requires_preun}
+
+%description
+[description]
+
+
+#### Build section
+
+%prep
+[prep]
+
+%build
+[buildscript]
+
+%install
+rm -rf %{buildroot}
+
+# The application might not install any resource files, but we want to have the directory anyway.
+install -d %{buildroot}[appres]
+# This one, instead, needs to be created
+install -d %{buildroot}[appownres]
+
+[installscript]
+
+# Create paths just to be sure
+mkdir -p %{buildroot}%{_unitdir}/sockets.target.wants
+mkdir -p %{buildroot}%{_libdir}/systemd/user
+
+# Compile its orbit
+%_hemera_configuration_compile[debugswitch] %{buildroot}%{_datadir}/hemera/services/[appid].ha
+
+[rootoperations]
+
+#### Pre/Post section
+
+%pre
+/sbin/ldconfig
+
+if [ $1 -eq 1 ] ; then
+  # Create group ha-[appiddashes]
+  groupadd ha-[appiddashes]
+fi
+
+%post
+%_gravity_create_users[debugswitch] [appidnodots]
+
+
+%preun
+if [ $1 -eq 0 ] ; then
+  %_gravity_delete_users[debugswitch] [appidnodots]
+
+fi
+
+%postun
+/sbin/ldconfig
+
+if [ $1 -eq 0 ] ; then
+  # Delete group ha-[appiddashes]
+  groupdel ha-[appiddashes]
+
+fi
+
+
+#### Files section
+
+%files
+%defattr(-,root,ha-[appiddashes],-)
+%dir [appres]
+%dir [appownres]
+%attr(-,root,root) %config %{_orbitdir}/[appidnodots]*.conf
+%attr(-,root,root) %{_libdir}/systemd/user/hemera-orbit-[appidnodots]*
+%attr(-,root,root) %{_unitdir}/hemera-orbit-[appidnodots]*
+%attr(-,root,root) %config %{_userlistsdir}/[appidnodots].userlist
+%attr(-,root,root) %config %{_sysconfdir}/dbus-1/starbus.d/*
+%attr(-,root,root) %config %{_datadir}/hemera/services/*
+[files]
+
+#### No changelog section, separate $pkg.changes contains the history

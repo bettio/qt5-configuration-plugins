@@ -1,0 +1,3 @@
+add_subdirectory(ProxiedApplications)
+add_subdirectory(PythonApplications)
+add_subdirectory(Qt5Applications)
